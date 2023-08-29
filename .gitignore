@@ -1,1 +1,6 @@
-.git
+__pycache__/
+.vscode/
+annotation/
+output/
+output_wka-blip.tar.gz
+某一次结果.txt
