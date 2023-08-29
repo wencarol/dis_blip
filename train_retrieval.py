@@ -51,7 +51,7 @@ def train(model, data_loader, optimizer, epoch, device, config):
 
         loss_ita, loss_itm = model(image, caption, alpha=alpha, idx=idx)                  
         loss = loss_ita + loss_itm
-        
+
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()    
@@ -83,19 +83,24 @@ def evaluation_two_tower(model, data_loader, device, config):
     text_ids = []
     text_embeds = []  
     text_atts = []
+    text_logits = []
     for i in range(0, num_text, text_bs):
         text = texts[i: min(num_text, i+text_bs)]
         text_input = model.tokenizer(text, padding='max_length', truncation=True, max_length=35, return_tensors="pt").to(device) 
         text_output = model.text_encoder(text_input.input_ids, attention_mask = text_input.attention_mask, mode='text')  
         text_embed = F.normalize(model.text_proj(text_output.last_hidden_state[:,0,:]))
+        text_logit = F.normalize(text_output.last_hidden_state, dim=-1)  # text_output.last_hidden_state.size()  torch.Size([206, 35, 768])
+        text_logits.append(text_logit)
         text_embeds.append(text_embed)   
         text_ids.append(text_input.input_ids)
         text_atts.append(text_input.attention_mask)
     
-    text_embeds = torch.cat(text_embeds,dim=0)
+    text_embeds = torch.cat(text_embeds,dim=0)  # torch.Size([5070, 256])
     text_ids = torch.cat(text_ids,dim=0)
     text_atts = torch.cat(text_atts,dim=0)
     text_ids[:,0] = model.tokenizer.enc_token_id
+    text_logits = torch.cat(text_logits, dim=0)
+    text_logit_feat = F.normalize(text_embeds, dim=-1)
     
     image_feats = []
     image_embeds = []
@@ -108,10 +113,69 @@ def evaluation_two_tower(model, data_loader, device, config):
         image_feats.append(image_feat.cpu())
         image_embeds.append(image_embed)
      
-    image_feats = torch.cat(image_feats,dim=0)
-    image_embeds = torch.cat(image_embeds,dim=0)
+    image_feats = torch.cat(image_feats,dim=0)    # torch.Size([1014, 577, 768])
+    image_embeds = torch.cat(image_embeds,dim=0)    # torch.Size([1014, 256])
+    image_logit = F.normalize(image_feats,dim=-1)    # torch.Size([1014, 577, 768])
+    image_logit_embed = F.normalize(image_embeds, dim=-1)
     
     sims_matrix = image_embeds @ text_embeds.t()
+
+    # for i in range(len(text_embeds)):
+    #     text_embed = text_embeds[i].unsqueeze(0)  # 当前文本的嵌入
+    #     import pdb
+    #     pdb.set_trace()
+    #     sim_tensor = text_embed @ image_embeds[:, 1:577, :].transpose(1, 2)
+    #     sim_score, _ = torch.max(sim_tensor, dim=2)
+    #     sim_score = torch.sum(sim_score, dim=1)
+    #     score_matrix_t2i[i] = sim_score
+
+    # sims_matrix = torch.zeros((len(texts), len(data_loader.dataset.image))).to(device)
+    # for i in range(len(texts)):
+    #     sim_tensor = text_logit_feat[i,:] @ image_logit_embed.transpose(0, 1)
+    #     sim_score, _ = torch.max(sim_tensor, dim=-1)
+    #     sims_matrix[i] = sim_score
+    # sims_matrix = sims_matrix.t()
+
+    # sims_matrix = torch.zeros((len(texts), len(data_loader.dataset.image))).to(device)    # torch.Size([5070, 1014])
+    # image_logit = image_logit.to(torch.float16).to(text_logits.device)
+    # tmp_text_logit = torch.chunk(text_logits, int(len(texts)/len(data_loader.dataset.image)), 0)
+    # for index, tmp_logit in enumerate(tmp_text_logit):
+    #     tmp_logit = tmp_logit.to(torch.float16).to(device)
+    #     interaction_text_to_image = torch.matmul(tmp_logit, image_logit.transpose(1, 2))
+    #     interaction_image_to_text = torch.matmul(image_logit, tmp_logit.transpose(1, 2))
+    #     u = torch.matmul(interaction_text_to_image, image_logit)  # Attention-based pooling for X
+    #     v = torch.matmul(interaction_image_to_text, tmp_logit) 
+    #     del interaction_text_to_image  # 释放显存
+    #     del interaction_image_to_text
+    #     torch.cuda.empty_cache()
+    #     for i in range(len(data_loader.dataset.image)):
+    #         #text_logits_i = text_logits[i, :, :].to(torch.float16).to(device)  # 逐步加载text_logits的子集
+    #         sim_tensor = torch.matmul(u[i,1:35,:], v[:, 1:577, :].transpose(1, 2))  #text_logit torch.Size([5070, 256])    image_logit torch.Size([1014, 256])
+    #         sim_score, _ = torch.max(sim_tensor, dim=2)
+    #         sim_score = torch.sum(sim_score, dim=1, out=sim_score)
+    #         sims_matrix[i+index*len(data_loader.dataset.image)] = sim_score.t()
+    #         del sim_tensor  # 释放显存
+    #         del sim_score
+    #         torch.cuda.empty_cache() 
+    # sims_matrix = sims_matrix.t()
+    # score_matrix_i2t = torch.full((len(data_loader.dataset.image),len(texts)),-100.0).to(device)
+
+
+    # sims_matrix = torch.zeros((len(texts), len(data_loader.dataset.image))).to(device)    # torch.Size([5070, 1014])
+    # image_logit = image_logit.to(text_logits.device)
+    # #image_logit = image_logit.to(torch.float16).to(device)
+    # for i in range(len(texts)):
+    #     #text_logits_tmp = text_logits[i, 1:35, :].to(torch.float16).to(device)  # 逐步加载text_logits的子集
+    #     sim_tensor = text_logits[i, 1:35, :] @ image_logit[:, 1:577, :].transpose(1, 2)  #text_logit torch.Size([5070, 256])    image_logit torch.Size([1014, 256])
+    #     sim_score, _ = torch.max(sim_tensor, dim=2)
+    #     sim_score = torch.sum(sim_score, dim=1, out=sim_score)
+    #     sims_matrix[i] = sim_score.t()
+    #     # del sim_tensor  # 释放显存
+    #     # del sim_score
+    #     # del text_logits_tmp
+    #     # torch.cuda.empty_cache() 
+    # sims_matrix = sims_matrix.t()
+
     score_matrix_i2t = torch.full((len(data_loader.dataset.image),len(texts)),-100.0).to(device)
     
     num_tasks = utils.get_world_size()
@@ -137,7 +201,7 @@ def evaluation_two_tower(model, data_loader, device, config):
         score_matrix_t2i[start+i,topk_idx] = topk_sim
 
     if args.distributed:
-        dist.barrier()   
+        dist.barrier() 
         torch.distributed.all_reduce(score_matrix_i2t, op=torch.distributed.ReduceOp.SUM) 
         torch.distributed.all_reduce(score_matrix_t2i, op=torch.distributed.ReduceOp.SUM)        
         
@@ -360,7 +424,10 @@ def main(args, config):
             
         score_val_i2t, score_val_t2i, = evaluation_two_tower(model_without_ddp, val_loader, device, config)
         score_test_i2t, score_test_t2i = evaluation_two_tower(model_without_ddp, test_loader, device, config)
-    
+        # score_val_i2t, score_val_t2i, = evaluation(model_without_ddp, val_loader, device, config)
+        # score_test_i2t, score_test_t2i = evaluation(model_without_ddp, test_loader, device, config)
+
+
         if utils.is_main_process():  
       
             val_result = itm_eval(score_val_i2t, score_val_t2i, val_loader.dataset.txt2img, val_loader.dataset.img2txt)  
@@ -373,7 +440,7 @@ def main(args, config):
                     'config': config,
                     'epoch': epoch,
                 }
-                torch.save(save_obj, os.path.join(args.output_dir, 'checkpoint_best.pth'))  
+                torch.save(save_obj, os.path.join(args.output_dir, 'checkpoint_best_maxsim_dis.pth'))  
                 best = val_result['r_mean']        
                 best_epoch = epoch  
                 

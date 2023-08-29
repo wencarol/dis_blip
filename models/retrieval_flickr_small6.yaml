@@ -8,8 +8,8 @@ pretrained: 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/mo
 # size of vit model; base or large
 
 vit: 'small6'
-# batch_size_train: 32
-# batch_size_test: 64
+#batch_size_train: 32
+#batch_size_test: 64
 batch_size_train: 8
 batch_size_test: 16
 vit_grad_ckpt: True
@@ -34,4 +34,4 @@ negative_all_rank: False
 # optimizer
 weight_decay: 0.05
 min_lr: 0
-max_epoch: 50
+max_epoch: 30

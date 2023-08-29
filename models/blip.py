@@ -184,7 +184,7 @@ def blip_feature_extractor(pretrained='',**kwargs):
     return model        
 
 def init_tokenizer():
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+    tokenizer = BertTokenizer.from_pretrained('./annotation/bert-base-uncased')
     tokenizer.add_special_tokens({'bos_token':'[DEC]'})
     tokenizer.add_special_tokens({'additional_special_tokens':['[ENC]']})       
     tokenizer.enc_token_id = tokenizer.additional_special_tokens_ids[0]  
@@ -228,10 +228,11 @@ def is_url(url_or_filename):
 def load_checkpoint(model,url_or_filename):
     if is_url(url_or_filename):
         #cached_file = download_cached_file(url_or_filename, check_hash=False, progress=True)
-        checkpoint = torch.load('/home/wenkaiao/mm_kd-main/annotation/model_base.pth', map_location='cpu') 
-        #checkpoint = torch.load('/home/wenkaiao/blip/mm_kd/output/retrieval_flickr/checkpoint_best.pth', map_location='cpu')
-    elif os.path.isfile(url_or_filename):        
-        checkpoint = torch.load(url_or_filename, map_location='cpu') 
+        checkpoint = torch.load('./annotation/model_base.pth', map_location='cpu') 
+        #checkpoint = torch.load('/home/wenkaiao/blip/mm_kd/output/retrieval_flickr/checkpoint_best_maxsim_dis.pth', map_location='cpu')
+    elif os.path.isfile(url_or_filename):   
+        checkpoint = torch.load('./annotation/model_base.pth', map_location='cpu')      
+        #checkpoint = torch.load(url_or_filename, map_location='cpu') 
     else:
         raise RuntimeError('checkpoint url or path is invalid')
         
