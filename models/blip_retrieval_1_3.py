@@ -188,13 +188,14 @@ class BLIP_Retrieval(nn.Module):
 
                     QK_text_image = (Q_text @ K_image.transpose(-2, -1))/math.sqrt(768)
                     QK_cross = (Q_cross @ K_cross.transpose(-2, -1) )/math.sqrt(768)
-                    QK_cross = QK_cross.masked_fill(~image_atts_chunk[i].bool()[:, None, None, :], float("-inf"))
-                    smooth_factor = 1e-12  # 平滑因子
+                    # QK_cross = QK_cross.masked_fill(~image_atts_chunk[i].bool()[:, None, None, :], float("-inf"))
+                    # smooth_factor = 1e-12  # 平滑因子
                     QK_text_image = F.softmax(QK_text_image, dim=-1)
                     QK_cross = F.softmax(QK_cross, dim=-1)
-                    QK_text_image = (QK_text_image + smooth_factor) / (QK_text_image.sum(dim=-1, keepdim=True) + smooth_factor)
-                    QK_cross = (QK_cross + smooth_factor) / (QK_cross.sum(dim=-1, keepdim=True) + smooth_factor)
-                    tmp_loss += F.kl_div(F.log_softmax(QK_text_image.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')
+                    # QK_text_image = (QK_text_image + smooth_factor) / (QK_text_image.sum(dim=-1, keepdim=True) + smooth_factor)
+                    # QK_cross = (QK_cross + smooth_factor) / (QK_cross.sum(dim=-1, keepdim=True) + smooth_factor)
+                    #tmp_loss += F.kl_div(F.log_softmax(QK_text_image.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')
+                    tmp_loss += torch.sum((QK_text_image - QK_cross)**2, dim=1).mean()
                     #QK_text_image = F.softmax(QK_text_image, dim=-1)
                     #QK_cross = F.softmax(QK_cross, dim=-1)
                     #tmp_loss += F.kl_div(F.log_softmax(QK_text_image.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')          
@@ -222,8 +223,9 @@ class BLIP_Retrieval(nn.Module):
 
         loss_ita += tmp_loss
         #loss_ita += F.kl_div(ranker_score.softmax(dim=-1).log(),maxsim_score.softmax(dim=-1),reduction='sum')  # KL散度
-        loss_ita += F.kl_div(maxsim_score.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
+        #loss_ita += F.kl_div(maxsim_score.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
         #loss_ita += torch.sum((sim_t2i_kd - ranker_score)**2, dim=1).mean() # mse
+        loss_ita += torch.sum((maxsim_score - ranker_score)**2, dim=1).mean() # mse
         #loss_ita += F.kl_div(sim_t2i_kd.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
 
 ##-----------------------------------------------

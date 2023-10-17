@@ -157,16 +157,16 @@ class BLIP_Retrieval(nn.Module):
                 K_text = self.text_encoder.encoder.layer[11].attention.self.key(text_output.last_hidden_state)
 
                 # 获取最后一层的Value向量
-                V_text = self.text_encoder.encoder.layer[11].attention.self.value(text_output.last_hidden_state)
+                #V_text = self.text_encoder.encoder.layer[11].attention.self.value(text_output.last_hidden_state)
 
                 # one_tower
                 # Q_one = self.text_encoder.encoder.layer[6].attention.self.query(output_pos_t.last_hidden_state)
                 # K_one = self.text_encoder.encoder.layer[6].attention.self.key(output_pos_t.last_hidden_state)
                 # V_one = self.text_encoder.encoder.layer[6].attention.self.value(output_pos_t.last_hidden_state)
 
-                Q_cross = self.text_encoder.encoder.layer[11].crossattention.self.query(output_pos_t.last_hidden_state)
+                Q_cross = self.text_encoder.encoder.layer[11].crossattention.self.query(output_pos_t.last_hidden_state)  # 单流模型Q K
                 K_cross = self.text_encoder.encoder.layer[11].crossattention.self.key(image_embeds_chunk[i])
-                V_cross = self.text_encoder.encoder.layer[11].crossattention.self.value(image_embeds_chunk[i])
+                #V_cross = self.text_encoder.encoder.layer[11].crossattention.self.value(image_embeds_chunk[i])
 
                 # image
                 qkv=self.visual_encoder.blocks[11].attn.qkv(image_embeds)  # Linear(in_features=768, out_features=2304, bias=True)   torch.Size([8, 577, 2304])
@@ -175,14 +175,15 @@ class BLIP_Retrieval(nn.Module):
                 QK_text_image = (Q_text @ K_image.transpose(-2, -1))/math.sqrt(768)
                 #sim = text_logit @ image_logit.transpose(-2, -1)
                 QK_cross = (Q_cross @ K_cross.transpose(-2, -1) )/math.sqrt(768)
-                QK_cross = QK_cross.masked_fill(~image_atts_chunk[i].bool()[:, None, None, :], float("-inf"))
+                #QK_cross = QK_cross.masked_fill(~image_atts_chunk[i].bool()[:, None, None, :], float("-inf"))
                 #smooth_factor = 1e-12  # 平滑因子
-                #QK_text_image = F.softmax(QK_text_image, dim=-1)
-                #QK_cross = F.softmax(QK_cross, dim=-1)
+                QK_text_image = F.softmax(QK_text_image, dim=-1)
+                QK_cross = F.softmax(QK_cross, dim=-1)
                 #sim = F.softmax(sim, dim=-1)
                 # QK_text_image = (QK_text_image + smooth_factor) / (QK_text_image.sum(dim=-1, keepdim=True) + smooth_factor)
                 # QK_cross = (QK_cross + smooth_factor) / (QK_cross.sum(dim=-1, keepdim=True) + smooth_factor)
-                tmp_loss += F.kl_div(F.log_softmax(QK_text_image.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')
+                #tmp_loss += F.kl_div(F.log_softmax(QK_text_image.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')
+                tmp_loss += torch.sum((QK_text_image - QK_cross)**2, dim=1).mean() # mse算loss
                 #tmp_loss += F.kl_div(F.log_softmax(sim.float(), dim=-1), F.softmax(QK_cross.float(), dim=-1), reduction='batchmean')
 
 
@@ -190,7 +191,7 @@ class BLIP_Retrieval(nn.Module):
         ranker_score = torch.cat(onetower_list, 0)   
 
         # maxsimilarity
-        maxsim_score = torch.zeros((8, 8)).to(text_logit.device)
+        maxsim_score = torch.zeros((16, 16)).to(text_logit.device)
         for i in range(8):
             sim_tensor = text_logit[i,1:35,:] @ image_logit[:,1:577,:].transpose(1, 2)
             sim_score, _ = torch.max(sim_tensor, dim=2)
@@ -203,13 +204,14 @@ class BLIP_Retrieval(nn.Module):
 
         
 
-        sim_t2i_kd = text_feat @ image_feat.t() #/ self.temp
+        #sim_t2i_kd = text_feat @ image_feat.t() #/ self.temp
 
         loss_ita += tmp_loss
         #loss_ita += F.kl_div(ranker_score.softmax(dim=-1).log(),maxsim_score.softmax(dim=-1),reduction='sum')  # KL散度
         #loss_ita += F.kl_div(maxsim_score.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
+        loss_ita += torch.sum((maxsim_score - ranker_score)**2, dim=1).mean()
         #loss_ita += torch.sum((sim_t2i_kd - ranker_score)**2, dim=1).mean() # mse
-        loss_ita += F.kl_div(sim_t2i_kd.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
+        #loss_ita += F.kl_div(sim_t2i_kd.softmax(dim=-1).log(),ranker_score.softmax(dim=-1),reduction='sum')
 
 
 ##-----------------------------------------------

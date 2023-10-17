@@ -147,8 +147,8 @@ class BLIP_Retrieval(nn.Module):
 
         sim_t2i_kd = text_feat @ image_feat.t() #/ self.temp    双流模型 图片和文字embedding的内积 n个文字和n个图片的任意pair的相似度
 
-        loss_ita += F.kl_div(ranker_score.softmax(dim=-1).log(),sim_t2i_kd.softmax(dim=-1),reduction='sum')  #KL散度
-        #loss_ita += torch.sum((sim_t2i_kd - ranker_score)**2, dim=1).mean()   #mse 
+        #loss_ita += F.kl_div(ranker_score.softmax(dim=-1).log(),sim_t2i_kd.softmax(dim=-1),reduction='sum')  #KL散度
+        loss_ita += torch.sum((sim_t2i_kd - ranker_score)**2, dim=1).mean()   #mse 
 
 
 ##-----------------------------------------------
