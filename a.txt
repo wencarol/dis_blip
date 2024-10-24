@@ -1,0 +1,673 @@
+| distributed init (rank 0, word 1): env://
+Creating retrieval dataset
+Using downloaded and verified file: ./annotation/flickr30k_val.json
+Using downloaded and verified file: ./annotation/flickr30k_test.json
+Creating model
+load checkpoint from https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base.pth
+missing keys:
+['text_encoder.encoder.scc_layer.0.attention.self.query.weight', 'text_encoder.encoder.scc_layer.0.attention.self.query.bias', 'text_encoder.encoder.scc_layer.0.attention.self.key.weight', 'text_encoder.encoder.scc_layer.0.attention.self.key.bias', 'text_encoder.encoder.scc_layer.0.attention.self.value.weight', 'text_encoder.encoder.scc_layer.0.attention.self.value.bias', 'text_encoder.encoder.scc_layer.0.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.0.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.0.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.0.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.0.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.0.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.0.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.0.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.0.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.0.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.0.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.0.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.0.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.0.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.0.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.0.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.0.output.dense.weight', 'text_encoder.encoder.scc_layer.0.output.dense.bias', 'text_encoder.encoder.scc_layer.0.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.0.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.1.attention.self.query.weight', 'text_encoder.encoder.scc_layer.1.attention.self.query.bias', 'text_encoder.encoder.scc_layer.1.attention.self.key.weight', 'text_encoder.encoder.scc_layer.1.attention.self.key.bias', 'text_encoder.encoder.scc_layer.1.attention.self.value.weight', 'text_encoder.encoder.scc_layer.1.attention.self.value.bias', 'text_encoder.encoder.scc_layer.1.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.1.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.1.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.1.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.1.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.1.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.1.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.1.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.1.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.1.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.1.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.1.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.1.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.1.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.1.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.1.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.1.output.dense.weight', 'text_encoder.encoder.scc_layer.1.output.dense.bias', 'text_encoder.encoder.scc_layer.1.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.1.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.2.attention.self.query.weight', 'text_encoder.encoder.scc_layer.2.attention.self.query.bias', 'text_encoder.encoder.scc_layer.2.attention.self.key.weight', 'text_encoder.encoder.scc_layer.2.attention.self.key.bias', 'text_encoder.encoder.scc_layer.2.attention.self.value.weight', 'text_encoder.encoder.scc_layer.2.attention.self.value.bias', 'text_encoder.encoder.scc_layer.2.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.2.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.2.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.2.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.2.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.2.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.2.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.2.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.2.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.2.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.2.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.2.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.2.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.2.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.2.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.2.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.2.output.dense.weight', 'text_encoder.encoder.scc_layer.2.output.dense.bias', 'text_encoder.encoder.scc_layer.2.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.2.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.3.attention.self.query.weight', 'text_encoder.encoder.scc_layer.3.attention.self.query.bias', 'text_encoder.encoder.scc_layer.3.attention.self.key.weight', 'text_encoder.encoder.scc_layer.3.attention.self.key.bias', 'text_encoder.encoder.scc_layer.3.attention.self.value.weight', 'text_encoder.encoder.scc_layer.3.attention.self.value.bias', 'text_encoder.encoder.scc_layer.3.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.3.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.3.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.3.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.3.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.3.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.3.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.3.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.3.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.3.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.3.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.3.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.3.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.3.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.3.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.3.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.3.output.dense.weight', 'text_encoder.encoder.scc_layer.3.output.dense.bias', 'text_encoder.encoder.scc_layer.3.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.3.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.4.attention.self.query.weight', 'text_encoder.encoder.scc_layer.4.attention.self.query.bias', 'text_encoder.encoder.scc_layer.4.attention.self.key.weight', 'text_encoder.encoder.scc_layer.4.attention.self.key.bias', 'text_encoder.encoder.scc_layer.4.attention.self.value.weight', 'text_encoder.encoder.scc_layer.4.attention.self.value.bias', 'text_encoder.encoder.scc_layer.4.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.4.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.4.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.4.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.4.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.4.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.4.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.4.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.4.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.4.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.4.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.4.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.4.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.4.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.4.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.4.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.4.output.dense.weight', 'text_encoder.encoder.scc_layer.4.output.dense.bias', 'text_encoder.encoder.scc_layer.4.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.4.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.5.attention.self.query.weight', 'text_encoder.encoder.scc_layer.5.attention.self.query.bias', 'text_encoder.encoder.scc_layer.5.attention.self.key.weight', 'text_encoder.encoder.scc_layer.5.attention.self.key.bias', 'text_encoder.encoder.scc_layer.5.attention.self.value.weight', 'text_encoder.encoder.scc_layer.5.attention.self.value.bias', 'text_encoder.encoder.scc_layer.5.attention.output.dense.weight', 'text_encoder.encoder.scc_layer.5.attention.output.dense.bias', 'text_encoder.encoder.scc_layer.5.attention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.5.attention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.5.crossattention.self.query.weight', 'text_encoder.encoder.scc_layer.5.crossattention.self.query.bias', 'text_encoder.encoder.scc_layer.5.crossattention.self.key.weight', 'text_encoder.encoder.scc_layer.5.crossattention.self.key.bias', 'text_encoder.encoder.scc_layer.5.crossattention.self.value.weight', 'text_encoder.encoder.scc_layer.5.crossattention.self.value.bias', 'text_encoder.encoder.scc_layer.5.crossattention.output.dense.weight', 'text_encoder.encoder.scc_layer.5.crossattention.output.dense.bias', 'text_encoder.encoder.scc_layer.5.crossattention.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.5.crossattention.output.LayerNorm.bias', 'text_encoder.encoder.scc_layer.5.intermediate.dense.weight', 'text_encoder.encoder.scc_layer.5.intermediate.dense.bias', 'text_encoder.encoder.scc_layer.5.output.dense.weight', 'text_encoder.encoder.scc_layer.5.output.dense.bias', 'text_encoder.encoder.scc_layer.5.output.LayerNorm.weight', 'text_encoder.encoder.scc_layer.5.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.0.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.0.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.0.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.0.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.0.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.0.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.0.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.0.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.0.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.0.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.0.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.0.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.0.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.0.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.0.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.0.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.0.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.0.output.dense.weight', 'text_encoder_m.encoder.scc_layer.0.output.dense.bias', 'text_encoder_m.encoder.scc_layer.0.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.0.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.1.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.1.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.1.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.1.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.1.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.1.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.1.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.1.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.1.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.1.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.1.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.1.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.1.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.1.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.1.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.1.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.1.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.1.output.dense.weight', 'text_encoder_m.encoder.scc_layer.1.output.dense.bias', 'text_encoder_m.encoder.scc_layer.1.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.1.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.2.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.2.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.2.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.2.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.2.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.2.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.2.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.2.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.2.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.2.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.2.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.2.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.2.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.2.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.2.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.2.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.2.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.2.output.dense.weight', 'text_encoder_m.encoder.scc_layer.2.output.dense.bias', 'text_encoder_m.encoder.scc_layer.2.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.2.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.3.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.3.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.3.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.3.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.3.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.3.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.3.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.3.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.3.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.3.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.3.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.3.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.3.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.3.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.3.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.3.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.3.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.3.output.dense.weight', 'text_encoder_m.encoder.scc_layer.3.output.dense.bias', 'text_encoder_m.encoder.scc_layer.3.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.3.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.4.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.4.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.4.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.4.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.4.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.4.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.4.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.4.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.4.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.4.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.4.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.4.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.4.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.4.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.4.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.4.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.4.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.4.output.dense.weight', 'text_encoder_m.encoder.scc_layer.4.output.dense.bias', 'text_encoder_m.encoder.scc_layer.4.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.4.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.5.attention.self.query.weight', 'text_encoder_m.encoder.scc_layer.5.attention.self.query.bias', 'text_encoder_m.encoder.scc_layer.5.attention.self.key.weight', 'text_encoder_m.encoder.scc_layer.5.attention.self.key.bias', 'text_encoder_m.encoder.scc_layer.5.attention.self.value.weight', 'text_encoder_m.encoder.scc_layer.5.attention.self.value.bias', 'text_encoder_m.encoder.scc_layer.5.attention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.5.attention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.5.attention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.5.attention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.query.weight', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.query.bias', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.key.weight', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.key.bias', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.value.weight', 'text_encoder_m.encoder.scc_layer.5.crossattention.self.value.bias', 'text_encoder_m.encoder.scc_layer.5.crossattention.output.dense.weight', 'text_encoder_m.encoder.scc_layer.5.crossattention.output.dense.bias', 'text_encoder_m.encoder.scc_layer.5.crossattention.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.5.crossattention.output.LayerNorm.bias', 'text_encoder_m.encoder.scc_layer.5.intermediate.dense.weight', 'text_encoder_m.encoder.scc_layer.5.intermediate.dense.bias', 'text_encoder_m.encoder.scc_layer.5.output.dense.weight', 'text_encoder_m.encoder.scc_layer.5.output.dense.bias', 'text_encoder_m.encoder.scc_layer.5.output.LayerNorm.weight', 'text_encoder_m.encoder.scc_layer.5.output.LayerNorm.bias']
+<class 'models.blip_retrieval.BLIP_Retrieval'>
+BertModel(
+  (embeddings): BertEmbeddings(
+    (word_embeddings): Embedding(30524, 768, padding_idx=0)
+    (position_embeddings): Embedding(512, 768)
+    (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+  (encoder): BertEncoder(
+    (layer): ModuleList(
+      (0): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (1): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (2): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (3): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (4): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (5): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (6): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (7): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (8): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (9): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (10): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (11): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+    (scc_layer): ModuleList(
+      (0): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (1): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (2): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (3): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (4): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+      (5): BertLayer(
+        (attention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (crossattention): BertAttention(
+          (self): BertSelfAttention(
+            (query): Linear(in_features=768, out_features=768, bias=True)
+            (key): Linear(in_features=768, out_features=768, bias=True)
+            (value): Linear(in_features=768, out_features=768, bias=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+          (output): BertSelfOutput(
+            (dense): Linear(in_features=768, out_features=768, bias=True)
+            (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+          )
+        )
+        (intermediate): BertIntermediate(
+          (dense): Linear(in_features=768, out_features=3072, bias=True)
+        )
+        (output): BertOutput(
+          (dense): Linear(in_features=3072, out_features=768, bias=True)
+          (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+  )
+)
+Start training
+Train Epoch: [0]  [    0/36250]  eta: 7:53:11  lr: 0.000003  loss_itm: 0.1303  loss_ita: 33.8033  time: 0.7832  data: 0.2942  max mem: 6822

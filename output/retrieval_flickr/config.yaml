@@ -1,5 +1,0 @@
-{alpha: 0.4, ann_root: annotation, batch_size_test: 16, batch_size_train: 8, dataset: flickr,
-image_root: /home/wenkaiao/blip/mm_kd/data/BLIP/flickr30k_images/, image_size: 384,
-init_lr: 2.5e-06, k_test: 128, max_epoch: 30, med_config: configs/small6_config.json,
-min_lr: 0, negative_all_rank: false, pretrained: https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base.pth,
-queue_size: 57600, vit: small6, vit_ckpt_layer: 0, vit_grad_ckpt: true, weight_decay: 0.05}

@@ -44,7 +44,7 @@ from transformers.modeling_utils import (
 )
 from transformers.utils import logging
 from transformers.models.bert.configuration_bert import BertConfig
-
+from torch.distributions import Bernoulli
 
 logger = logging.get_logger(__name__)
 
@@ -384,12 +384,128 @@ class BertLayer(nn.Module):
         return layer_output
 
 
+# class BertEncoder(nn.Module):
+#     def __init__(self, config):
+#         super().__init__()
+#         self.config = config
+#         self.layer = nn.ModuleList([BertLayer(config,i) for i in range(config.num_hidden_layers)])
+#         self.gradient_checkpointing = False
+
+#     def forward(
+#         self,
+#         hidden_states,
+#         attention_mask=None,
+#         head_mask=None,
+#         encoder_hidden_states=None,
+#         encoder_attention_mask=None,
+#         past_key_values=None,
+#         use_cache=None,
+#         output_attentions=False,
+#         output_hidden_states=False,
+#         return_dict=True,
+#         mode='multimodal',
+#     ):
+#         all_hidden_states = () if output_hidden_states else None
+#         all_self_attentions = () if output_attentions else None
+#         all_cross_attentions = () if output_attentions and self.config.add_cross_attention else None
+
+#         next_decoder_cache = () if use_cache else None
+               
+#         for i in range(self.config.num_hidden_layers):
+#             layer_module = self.layer[i]
+#             if output_hidden_states:
+#                 all_hidden_states = all_hidden_states + (hidden_states,)
+
+#             layer_head_mask = head_mask[i] if head_mask is not None else None
+#             past_key_value = past_key_values[i] if past_key_values is not None else None
+
+#             if self.gradient_checkpointing and self.training:
+
+#                 if use_cache:
+#                     logger.warn(
+#                         "`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`..."
+#                     )
+#                     use_cache = False
+
+#                 def create_custom_forward(module):
+#                     def custom_forward(*inputs):
+#                         return module(*inputs, past_key_value, output_attentions)
+
+#                     return custom_forward
+
+#                 layer_outputs = torch.utils.checkpoint.checkpoint(
+#                     create_custom_forward(layer_module),
+#                     hidden_states,
+#                     attention_mask,
+#                     layer_head_mask,
+#                     encoder_hidden_states,
+#                     encoder_attention_mask,
+#                     mode=mode,
+#                 )
+#             else:
+#                 layer_outputs = layer_module(
+#                     hidden_states,
+#                     attention_mask,
+#                     layer_head_mask,
+#                     encoder_hidden_states,
+#                     encoder_attention_mask,
+#                     past_key_value,
+#                     output_attentions,
+#                     mode=mode,
+#                 )
+
+#             hidden_states = layer_outputs[0]
+#             if use_cache:
+#                 next_decoder_cache += (layer_outputs[-1],)
+#             if output_attentions:
+#                 all_self_attentions = all_self_attentions + (layer_outputs[1],)
+
+#         if output_hidden_states:
+#             all_hidden_states = all_hidden_states + (hidden_states,)
+
+#         if not return_dict:
+#             return tuple(
+#                 v
+#                 for v in [
+#                     hidden_states,
+#                     next_decoder_cache,
+#                     all_hidden_states,
+#                     all_self_attentions,
+#                     all_cross_attentions,
+#                 ]
+#                 if v is not None
+#             )
+#         return BaseModelOutputWithPastAndCrossAttentions(
+#             last_hidden_state=hidden_states,
+#             past_key_values=next_decoder_cache,
+#             hidden_states=all_hidden_states,
+#             attentions=all_self_attentions,
+#             cross_attentions=all_cross_attentions,
+#         )
+
+
 class BertEncoder(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, scc_n_layer=6):
         super().__init__()
         self.config = config
+        self.prd_n_layer = config.num_hidden_layers
+        self.scc_n_layer = scc_n_layer
+        assert self.prd_n_layer % self.scc_n_layer == 0
+        self.compress_ratio = self.prd_n_layer // self.scc_n_layer
+        self.bernoulli = None
+        self.output_attentions = config.output_attentions
+        self.output_hidden_states = config.output_hidden_states
+
         self.layer = nn.ModuleList([BertLayer(config,i) for i in range(config.num_hidden_layers)])
         self.gradient_checkpointing = False
+
+        self.scc_layer = nn.ModuleList([BertLayer(config,i) for i in range(self.scc_n_layer)])
+
+    def set_replacing_rate(self, replacing_rate):
+        if not 0 < replacing_rate <= 1:
+            raise Exception('Replace rate must be in the range (0, 1]!')
+        self.bernoulli = Bernoulli(torch.tensor([replacing_rate]))
+
 
     def forward(
         self,
@@ -410,9 +526,21 @@ class BertEncoder(nn.Module):
         all_cross_attentions = () if output_attentions and self.config.add_cross_attention else None
 
         next_decoder_cache = () if use_cache else None
-               
-        for i in range(self.config.num_hidden_layers):
-            layer_module = self.layer[i]
+
+        if self.training:
+            inference_layers = []
+            for i in range(self.scc_n_layer):
+                if self.bernoulli.sample() == 1:  # REPLACE
+                    inference_layers.append(self.scc_layer[i])
+                else:  # KEEP the original
+                    for offset in range(self.compress_ratio):
+                        inference_layers.append(self.layer[i * self.compress_ratio + offset])
+
+        else:  # inference with compressed model
+            inference_layers = self.scc_layer
+        for i, layer_module in enumerate(inference_layers):
+        # for i in range(self.config.num_hidden_layers):
+        #     layer_module = self.layer[i]
             if output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
@@ -482,7 +610,6 @@ class BertEncoder(nn.Module):
             attentions=all_self_attentions,
             cross_attentions=all_cross_attentions,
         )
-
 
 class BertPooler(nn.Module):
     def __init__(self, config):
